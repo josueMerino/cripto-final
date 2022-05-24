@@ -1,0 +1,11 @@
+@startuml
+class ClavePrivada
+class TextoEncriptado
+class TextoDesencriptado
+class Algoritmo
+
+TextoEncriptado --> Algoritmo : pasa por
+Algoritmo -l-> ClavePrivada : hace uso
+Algoritmo --> TextoDesencriptado : saca
+
+@enduml
