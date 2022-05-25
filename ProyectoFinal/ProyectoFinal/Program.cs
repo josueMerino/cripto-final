@@ -20,7 +20,7 @@ namespace ProyectoFinal
             StreamReader file = new StreamReader("../../../informacion.txt");
             string fileContent = file.ReadToEnd();
             file.Close();
-            byte[] text = Encoding.UTF8.GetBytes(fileContent);
+            byte[] text = Convert.FromBase64String(Encoding.UTF8.GetString(Convert.FromBase64String(fileContent)));
             
             XmlDocument claves = new XmlDocument();
             claves.Load("../../../claves.xml");
@@ -28,15 +28,12 @@ namespace ProyectoFinal
             XmlNode node = claves.DocumentElement.SelectSingleNode("/ALGORITMO/clavePrivada");
             String clavePrivada = node.InnerText;
 
-            XmlDocument clavePrivadas = new XmlDocument();
-            clavePrivadas.LoadXml(clavePrivada);
-
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(1024);
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
 
             rsa.FromXmlString(clavePrivada);
       
 
-            byte[] decryptedMessageBytes = rsa.Decrypt(text, true);
+            byte[] decryptedMessageBytes = rsa.Decrypt(text, false);
             string decryptedMessageString = Encoding.UTF8.GetString(decryptedMessageBytes);
             Console.WriteLine(decryptedMessageString.ToString());
             
