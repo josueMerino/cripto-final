@@ -33,7 +33,7 @@ namespace ProyectoFinal
             rsa.FromXmlString(clavePrivada);
       
 
-            byte[] decryptedMessageBytes = rsa.Decrypt(text, false);
+            byte[] decryptedMessageBytes = rsa.Decrypt(text, RSAEncryptionPadding.Pkcs1);
             string decryptedMessageString = Encoding.UTF8.GetString(decryptedMessageBytes);
             Console.WriteLine(decryptedMessageString.ToString());
             

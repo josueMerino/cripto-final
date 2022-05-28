@@ -1,0 +1,34 @@
+@startuml
+
+class ControladorVista{
+    - File archivo
+    + seleccionarClaves()
+    + mostrarClaves()
+    + mostrarTextoEncriptado()
+    + mostrarTextoDesencriptado()
+    - importarTextoEncriptado()
+    - importarTextoDesencriptado()
+
+}
+class RSA {
+    - ClavePublica clavePublica;
+    - ClavePrivada clavePrivada;
+    - String mensaje;
+    + constructor(ClavePublica clavePublica, ClavePrivada clavePrivada)
+    + encriptar()
+    + desencriptar()
+}
+
+interface Clave{
+    - String valor;
+    + constructor(File archivo)
+    + getValor()
+}
+
+class ClavePublica implements Clave{}
+class ClavePrivada implements Clave{}
+
+ControladorVista ..> RSA : uses
+ClavePublica -u-> RSA
+ClavePrivada -u-> RSA
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+(*)-->"Obtener texto encriptado"
+-->"Obtener la clave privada"
+--> "Desencriptar con algoritmo el texto"
+--> "Mostrar texto desencriptado"
+@enduml
