@@ -11,24 +11,28 @@ class ControladorVista{
 
 }
 class RSA {
-    - ClavePublica clavePublica;
-    - ClavePrivada clavePrivada;
-    - String mensaje;
-    + constructor(ClavePublica clavePublica, ClavePrivada clavePrivada)
+    - Clave clavesPublicaPrivada;
+    - Mensaje mensaje;
+    + constructor(Clave claves, Mensaje mensaje)
     + encriptar()
     + desencriptar()
 }
 
-interface Clave{
-    - String valor;
-    + constructor(File archivo)
-    + getValor()
+class Mensaje{
+    - String texto;
+    + constructor(String texto)
+    + Byte[] getMensajeParaDesencriptar()
 }
 
-class ClavePublica implements Clave{}
-class ClavePrivada implements Clave{}
+class Clave{
+    - XmlNode claves;
+    + constructor(File archivo)
+    + String getClavePublica()
+    + String getClavePrivada()
+    - getValorFromFile()
+}
 
 ControladorVista ..> RSA : uses
-ClavePublica -u-> RSA
-ClavePrivada -u-> RSA
+Clave -u-> RSA
+Mensaje -u-> RSA
 @enduml
