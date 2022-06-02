@@ -18,12 +18,12 @@ namespace CriptoFinalForm
 
         public String getClavePublica()
         {
-            return this.claves.SelectSingleNode("/clave").InnerText;
+            return this.claves.SelectSingleNode("clave").InnerText;
         }
 
         public String getClavePrivada()
         {
-            return this.claves.SelectSingleNode("/clavePrivada").InnerText;
+            return this.claves.SelectSingleNode("clavePrivada").InnerText;
         }
 
         private XmlNode getClavesFromXml(XmlDocument claves)

@@ -13,30 +13,56 @@ namespace CriptoFinalForm
 {
     public partial class Form1 : Form
     {
+        private String archivoClavesNombre;
+        private String archivoMensajeNombre;
+
         public Form1()
         {
             InitializeComponent();
+            mensajeFinal.Text = "";
+            accionRealizar.DropDownStyle = ComboBoxStyle.DropDownList;
+            accionRealizar.SelectedIndex = 0;
         }
 
-        private void subirArchivoBoton(object sender, EventArgs e)
+        private void subirArchivoClavesBoton(object sender, EventArgs e)
         {
-            int size = -1;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
-                string file = openFileDialog1.FileName;
-                try
-                {
-                    string text = File.ReadAllText(file);
-                    size = text.Length;
-                }
-                catch (IOException)
-                {
-                }
+                this.archivoClavesNombre = openFileDialog1.FileName;
+                FileStream file1 = new FileStream(archivoClavesNombre, FileMode.Open, FileAccess.Read);
+                VistaControlador vistaHandler = new VistaControlador(file1, file1);
+
             }
-            Console.WriteLine(size); // <-- Shows file size in debugging mode.
-            Console.WriteLine(result); // <-- For debugging use.
+        }
+
+        private void subirArchivoMensajeBoton(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                this.archivoMensajeNombre = openFileDialog1.FileName;
+            }
+            
+        }
+
+        private void encriptarDesencriptarBoton(object sender, EventArgs e)
+        {
+            FileStream archivoClaves = new FileStream(this.archivoClavesNombre, FileMode.Open, FileAccess.Read);
+            FileStream archivoMensaje = new FileStream(this.archivoMensajeNombre, FileMode.Open, FileAccess.Read);
+
+            VistaControlador vistaHandler = new VistaControlador(archivoClaves, archivoMensaje);
+            if(accionRealizar.Text == "Encriptar")
+            {
+                mensajeFinal.Text = vistaHandler.mostrarTextoEncriptado();
+            }
+            else
+            {
+                mensajeFinal.Text = vistaHandler.mostrarTextoDesencriptado();
+            }
+
         }
     }
 }

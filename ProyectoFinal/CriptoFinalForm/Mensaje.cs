@@ -15,9 +15,16 @@ namespace CriptoFinalForm
             this.texto = texto;
         }
 
-        public byte[] getMensajeParaDesencriptar()
+        public byte[] getMensajeParaDesencriptarEnBytes()
         {
-            return Convert.FromBase64String(Encoding.UTF8.GetString(Convert.FromBase64String(this.texto))); ;
+            return Convert.FromBase64String(Encoding.UTF8.GetString(Convert.FromBase64String(this.texto)));
         }
+
+        public byte[] getMensajeParaEncriptarEnBytes()
+        {
+            return Convert.FromBase64String(Convert.ToBase64String(Encoding.Default.GetBytes(this.texto)));
+        }
+
+
     }
 }
