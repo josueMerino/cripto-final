@@ -1,38 +1,48 @@
 @startuml
 
+class Form {
+    - String archivoClavesNombre;
+    - String archivoMensajeNombre;
+    + constructor();
+    - subirArchivoClavesBoton()
+    - subirArchivoMensajeBoton()
+    - encriptarDesencriptarBoton()
+    - salirBoton();
+}
+
 class ControladorVista{
     - File archivo
-    + seleccionarClaves()
-    + mostrarClaves()
-    + mostrarTextoEncriptado()
-    + mostrarTextoDesencriptado()
-    - importarTextoEncriptado()
-    - importarTextoDesencriptado()
+    + String mostrarTextoEncriptado()
+    + String mostrarTextoDesencriptado()
+    - String importarTextoEncriptado()
+    - String importarTextoDesencriptado()
 
 }
 class RSA {
     - Clave clavesPublicaPrivada;
     - Mensaje mensaje;
     + constructor(Clave claves, Mensaje mensaje)
-    + encriptar()
-    + desencriptar()
+    + String encriptar()
+    + String desencriptar()
 }
 
 class Mensaje{
     - String texto;
     + constructor(String texto)
-    + Byte[] getMensajeEnBytes()
+    + Byte[] getMensajeParaEncriptarEnBytes()
+    + Byte[] getMensajeParaDesencriptarEnBytes()
 }
 
 class Clave{
     - XmlNode claves;
-    + constructor(File archivo)
+    + constructor(XmlDocument archivo)
     + String getClavePublica()
     + String getClavePrivada()
-    - getValorFromFile()
+    - XmlNode getClavesFromXml()
 }
 
-ControladorVista ..> RSA : uses
+Form <-- ControladorVista
+RSA <.u. ControladorVista : use
 Clave -u-> RSA
 Mensaje -u-> RSA
 @enduml

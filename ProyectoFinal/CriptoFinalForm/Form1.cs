@@ -19,9 +19,11 @@ namespace CriptoFinalForm
         public Form1()
         {
             InitializeComponent();
-            mensajeFinal.Text = "";
             accionRealizar.DropDownStyle = ComboBoxStyle.DropDownList;
-            accionRealizar.SelectedIndex = 0;
+            algoritmoSeleccion.DropDownStyle = ComboBoxStyle.DropDownList;
+            accionRealizar.SelectedIndex = 1;
+            algoritmoSeleccion.SelectedIndex = 0;
+            infoText.Enabled = false;
         }
 
         private void subirArchivoClavesBoton(object sender, EventArgs e)
@@ -31,9 +33,8 @@ namespace CriptoFinalForm
             if (result == DialogResult.OK) // Test result.
             {
                 this.archivoClavesNombre = openFileDialog1.FileName;
-                FileStream file1 = new FileStream(archivoClavesNombre, FileMode.Open, FileAccess.Read);
-                VistaControlador vistaHandler = new VistaControlador(file1, file1);
-
+                infoClaves.Text = openFileDialog1.SafeFileName;
+                infoClavesShow.Text = File.ReadAllText(this.archivoClavesNombre);
             }
         }
 
@@ -44,6 +45,7 @@ namespace CriptoFinalForm
             if (result == DialogResult.OK) // Test result.
             {
                 this.archivoMensajeNombre = openFileDialog1.FileName;
+                infoText.Text = File.ReadAllText(this.archivoMensajeNombre);
             }
             
         }
@@ -56,13 +58,18 @@ namespace CriptoFinalForm
             VistaControlador vistaHandler = new VistaControlador(archivoClaves, archivoMensaje);
             if(accionRealizar.Text == "Encriptar")
             {
-                mensajeFinal.Text = vistaHandler.mostrarTextoEncriptado();
+                 MessageBox.Show(vistaHandler.mostrarTextoEncriptado());
             }
             else
             {
-                mensajeFinal.Text = vistaHandler.mostrarTextoDesencriptado();
+                MessageBox.Show(vistaHandler.mostrarTextoDesencriptado());
             }
 
+        }
+
+        private void salirBoton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
